@@ -7,7 +7,7 @@ FROM --platform=$IMAGE_ARCH $DOCKER_REGISTRY/$BASE_NAME:$IMAGE_TAG AS base
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     apt-utils \
     && apt-get -y upgrade \
-    && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+    && apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
 ARG ACCEPT_FSL_EULA=0
 RUN if [ "${ACCEPT_FSL_EULA}" != "1" ];then \
@@ -30,7 +30,7 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
     libglesv1-cm-vivante1 \
     libglslc-vivante1 \
     libopencl-vivante1 \
-    && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+    && apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
 # Make sure the user can access DRM and video devices
 RUN usermod -a -G video,render torizon
