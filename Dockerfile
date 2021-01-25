@@ -18,6 +18,9 @@ RUN if [ "${ACCEPT_FSL_EULA}" != "1" ];then \
         echo "INFO: Vivante EULA has been accepted!"; \
     fi
 
+# Add stretch repo for java-8-jdk and openjfx
+RUN echo deb "http://ftp.debian.org/debian" stretch main >> /etc/apt/sources.list
+
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     libwayland-client0 \
     libwayland-server0 \
@@ -31,6 +34,19 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
     libglslc-vivante1 \
     libopencl-vivante1 \
     && apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
+
+
+
+# Install Xact Metal base required packages
+RUN apt-get install -y --no-install-recommends \
+    binutils zip unzip git vim wget xz-utils bzip2 htop
+
+# Install Xact Metal development packages 
+RUN apt-get install -y --no-install-recommends \
+    autoconf automake build-essential pkg-config \
+    libglib2.0-dev libpng-dev \
+    libegl-vivante1-dev libgbm-vivante1-dev libglesv2-vivante1-dev
+
 
 # Make sure the user can access DRM and video devices
 RUN usermod -a -G video,render torizon
