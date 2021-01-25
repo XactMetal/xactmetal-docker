@@ -41,6 +41,13 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     binutils zip unzip git vim wget xz-utils bzip2 htop
 
+# Install Java 8 packages
+RUN apt-get install -y --no-install-recommends \
+    openjdk-8-jdk \
+    libopenjfx-jni=8u141-b14-3~deb9u1 \
+    libopenjfx-java=8u141-b14-3~deb9u1 \
+    openjfx=8u141-b14-3~deb9u1
+
 # Install Xact Metal development packages 
 RUN apt-get install -y --no-install-recommends \
     autoconf automake build-essential pkg-config \
