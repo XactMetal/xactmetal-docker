@@ -52,6 +52,15 @@ RUN apt-get install -y --no-install-recommends \
 ADD mod_openjfx.sh /tmp/
 RUN /tmp/mod_openjfx.sh
 
+# Install additional packages
+RUN apt-get install -y --no-install-recommends \
+    bossa-cli gpiod
+
+# Install JavaCV
+RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.deb && \
+    apt-get install -y --no-install-recommends ./xact-touchscreen-deps*.deb && \
+    rm ./xact-touchscreen-deps*.deb
+
 # Install Xact Metal development packages 
 # RUN apt-get install -y --no-install-recommends \
 #     autoconf automake build-essential pkg-config \
