@@ -48,11 +48,16 @@ RUN apt-get install -y --no-install-recommends \
     libopenjfx-java=8u141-b14-3~deb9u1 \
     openjfx=8u141-b14-3~deb9u1
 
+# Apply OpenJFX patches
+ADD mod_openjfx.sh /tmp/
+RUN /tmp/mod_openjfx.sh
+
 # Install Xact Metal development packages 
-RUN apt-get install -y --no-install-recommends \
-    autoconf automake build-essential pkg-config \
-    libglib2.0-dev libpng-dev \
-    libegl-vivante1-dev libgbm-vivante1-dev libglesv2-vivante1-dev
+# RUN apt-get install -y --no-install-recommends \
+#     autoconf automake build-essential pkg-config \
+#     libglib2.0-dev libpng-dev \
+#     libegl-vivante1-dev libgbm-vivante1-dev libglesv2-vivante1-dev
+
 
 
 # Make sure the user can access DRM and video devices
