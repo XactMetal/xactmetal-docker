@@ -54,7 +54,7 @@ RUN /tmp/mod_openjfx.sh
 
 # Install additional packages
 RUN apt-get install -y --no-install-recommends \
-    bossa-cli gpiod
+    bossa-cli gpiod screen
 
 # Install JavaCV
 RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.deb && \
