@@ -17,7 +17,7 @@ cd ..
    # libglass_monocle.so and jfxrt.jar
 git clone https://github.com/XactMetal/libglass-monocle
 cd libglass-monocle
-git checkout toradex-binary
+git checkout toradex
 cp libglass_monocle.so /usr/lib/jvm/java-8-openjdk-arm64/jre/lib/aarch64/libglass_monocle.so
 mv /usr/share/java/openjfx/jre/lib/ext/jfxrt.jar /tmp/jfxrt.jar
 cd java
