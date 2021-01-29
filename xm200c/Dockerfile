@@ -6,8 +6,7 @@ FROM --platform=$IMAGE_ARCH $DOCKER_REGISTRY/$BASE_NAME:$IMAGE_TAG AS base
 
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     apt-utils \
-    && apt-get -y upgrade \
-    && apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
+    && apt-get -y upgrade
 
 ARG ACCEPT_FSL_EULA=0
 RUN if [ "${ACCEPT_FSL_EULA}" != "1" ];then \
@@ -21,6 +20,9 @@ RUN if [ "${ACCEPT_FSL_EULA}" != "1" ];then \
 # Add stretch repo for java-8-jdk and openjfx
 RUN echo deb "http://ftp.debian.org/debian" stretch main >> /etc/apt/sources.list
 
+# Add armhf multilib support
+RUN dpkg --add-architecture armhf
+
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     libwayland-client0 \
     libwayland-server0 \
@@ -32,10 +34,7 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
     libglesv2-vivante1 \
     libglesv1-cm-vivante1 \
     libglslc-vivante1 \
-    libopencl-vivante1 \
-    && apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
-
-
+    libopencl-vivante1
 
 # Install Xact Metal base required packages
 RUN apt-get install -y --no-install-recommends \
@@ -52,14 +51,14 @@ RUN apt-get install -y --no-install-recommends \
 ADD mod_openjfx.sh /tmp/
 RUN /tmp/mod_openjfx.sh
 
-# Install additional packages
-RUN apt-get install -y --no-install-recommends \
-    bossa-cli gpiod screen
-
 # Install JavaCV
 RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.deb && \
     apt-get install -y --no-install-recommends ./xact-touchscreen-deps*.deb && \
     rm ./xact-touchscreen-deps*.deb
+
+# Install additional packages
+RUN apt-get install -y --no-install-recommends \
+    bossa-cli gpiod gnupg screen network-manager net-tools libdbus-1-3 libdbus-1-3:armhf libc6:armhf
 
 # Install Xact Metal development packages 
 # RUN apt-get install -y --no-install-recommends \
@@ -67,7 +66,8 @@ RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.
 #     libglib2.0-dev libpng-dev \
 #     libegl-vivante1-dev libgbm-vivante1-dev libglesv2-vivante1-dev
 
-
+# Clean up system
+RUN apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
 # Make sure the user can access DRM and video devices
 RUN usermod -a -G video,render torizon
