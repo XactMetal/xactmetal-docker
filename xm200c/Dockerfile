@@ -58,7 +58,8 @@ RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.
 
 # Install additional packages
 RUN apt-get install -y --no-install-recommends \
-    bossa-cli gpiod gnupg screen network-manager net-tools libdbus-1-3 libdbus-1-3:armhf libc6:armhf
+    bossa-cli gpiod gnupg screen network-manager net-tools libdbus-1-3 libdbus-1-3:armhf libc6:armhf \
+    procps
 
 # Install Xact Metal development packages 
 # RUN apt-get install -y --no-install-recommends \
@@ -76,6 +77,9 @@ ENV WAYLAND_USER="torizon"
 ENV XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
 ENV WAYLAND_DISPLAY="wayland-0"
 ENV DISPLAY=":0"
+
+# Install xelevate command
+COPY xelevate.sh /usr/bin/xelevate
 
 COPY nxp-eula.sh /etc/profile.d/nxp-eula.sh
 
