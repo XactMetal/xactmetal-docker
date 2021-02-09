@@ -52,9 +52,13 @@ ADD mod_openjfx.sh /tmp/
 RUN /tmp/mod_openjfx.sh
 
 # Install JavaCV
-RUN wget https://updates.xactmetal.com/packages/xact-touchscreen-deps-2.0-arm64.deb && \
-    apt-get install -y --no-install-recommends ./xact-touchscreen-deps*.deb && \
-    rm ./xact-touchscreen-deps*.deb
+RUN git clone https://github.com/XactMetal/javacv-deps && \
+    cd javacv-deps && \
+    git checkout 1.5.4-x1 && \
+    ./make-deb.sh linux-arm64 && \
+    dpkg --no-debsig -i *.deb && \
+    cd .. && \
+    rm -R javacv-deps
 
 # Install additional packages
 RUN apt-get install -y --no-install-recommends \
