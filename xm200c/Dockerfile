@@ -74,6 +74,9 @@ RUN apt-get install -y --no-install-recommends \
 # Clean up system
 RUN apt-get clean #&& apt-get autoremove && rm -rf /var/lib/apt/lists/*
 
+# Symlink SSD
+RUN ln -s /torizon/run/xact/ssd /var/db/xact
+
 # Make sure the user can access DRM and video devices
 RUN usermod -a -G video,render torizon
 
