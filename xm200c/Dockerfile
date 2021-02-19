@@ -63,7 +63,7 @@ RUN git clone https://github.com/XactMetal/javacv-deps && \
 # Install additional packages
 RUN apt-get install -y --no-install-recommends \
     bossa-cli gpiod gnupg screen network-manager net-tools libdbus-1-3 libdbus-1-3:armhf libc6:armhf \
-    procps
+    procps gnupg1
 
 # Install Xact Metal development packages 
 # RUN apt-get install -y --no-install-recommends \
